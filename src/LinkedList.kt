@@ -26,7 +26,7 @@ class LinkedList<T>(override val size: Int) : MutableList<T> {
 
     override fun addAll(elements: Collection<T>): Boolean {
         if (head == null) {
-            throw Throwable()
+            //this = elements.toMutableList()
         }
         for (e in elements) {
             this.add(e)
@@ -53,7 +53,7 @@ class LinkedList<T>(override val size: Int) : MutableList<T> {
 
     override fun remove(element: T): Boolean {
         val iterator: MutableListIterator<T> = listIterator()
-        when (iterator.hasNext()) {
+        while (iterator.hasNext()) {
             if (iterator.next() == element) {
                 return true
             }
