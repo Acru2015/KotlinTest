@@ -11,4 +11,4 @@ fun quicksort(toSort: IntArray): IntArray {
     return smaller.toIntArray()
 }
 
-//TODO: implement LinkedList as MutableList
+//TODO: implement LinkedList as MutableList, WTF does this mean

@@ -1,4 +1,5 @@
 class LinkedList<T>(override val size: Int) : MutableList<T> {
+
     var head: Node<T>? = null
     var tail: Node<T>? = null
 
@@ -15,13 +16,96 @@ class LinkedList<T>(override val size: Int) : MutableList<T> {
         return true
     }
 
-    fun join(linkedList: LinkedList<T>) {
-        if (tail != null && linkedList.head != null) {
-            (tail as Node<T>).next = linkedList.head
-            (linkedList.head as Node<T>).prev = tail
-        } else if (tail == null && linkedList.head != null) {
-            head = linkedList.head
-            tail = linkedList.tail
+    override fun add(index: Int, element: T) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun addAll(index: Int, elements: Collection<T>): Boolean {
+        throw UnsupportedOperationException()
+    }
+
+    override fun addAll(elements: Collection<T>): Boolean {
+        if (head == null) {
+            throw Throwable()
         }
+        for (e in elements) {
+            this.add(e)
+        }
+        return true
+    }
+
+    override fun clear() {
+        head = null
+        tail = null
+    }
+
+    override fun listIterator(): MutableListIterator<T> {
+        if (head != null) {
+            return LinkedListIterator(head as Node<T>)
+        } else {
+            throw Throwable()
+        }
+    }
+
+    override fun listIterator(index: Int): MutableListIterator<T> {
+        throw UnsupportedOperationException()
+    }
+
+    override fun remove(element: T): Boolean {
+        val iterator: MutableListIterator<T> = listIterator()
+        when (iterator.hasNext()) {
+            if (iterator.next() == element) {
+                return true
+            }
+        }
+        return false
+    }
+
+    override fun removeAll(elements: Collection<T>): Boolean {
+        throw UnsupportedOperationException()
+    }
+
+    override fun removeAt(index: Int): T {
+        throw UnsupportedOperationException()
+    }
+
+    override fun retainAll(elements: Collection<T>): Boolean {
+        throw UnsupportedOperationException()
+    }
+
+    override fun set(index: Int, element: T): T {
+        throw UnsupportedOperationException()
+    }
+
+    override fun subList(fromIndex: Int, toIndex: Int): MutableList<T> {
+        throw UnsupportedOperationException()
+    }
+
+    override fun contains(element: T): Boolean {
+        throw UnsupportedOperationException()
+    }
+
+    override fun containsAll(elements: Collection<T>): Boolean {
+        throw UnsupportedOperationException()
+    }
+
+    override fun get(index: Int): T {
+        throw UnsupportedOperationException()
+    }
+
+    override fun indexOf(element: T): Int {
+        throw UnsupportedOperationException()
+    }
+
+    override fun isEmpty(): Boolean {
+        throw UnsupportedOperationException()
+    }
+
+    override fun lastIndexOf(element: T): Int {
+        throw UnsupportedOperationException()
+    }
+
+    override fun iterator(): MutableIterator<T> {
+        throw UnsupportedOperationException()
     }
 }
