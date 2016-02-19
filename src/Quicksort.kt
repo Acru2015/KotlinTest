@@ -11,6 +11,4 @@ fun quicksort(toSort: IntArray): IntArray {
     return smaller.toIntArray()
 }
 
-class LinkedList
-
-//TODO: mplement LinkedList, concat
+//TODO: implement LinkedList as MutableList
