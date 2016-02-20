@@ -1,4 +1,6 @@
-class LinkedList<T>(override val size: Int) : MutableList<T> {
+class LinkedList<T>() : MutableList<T> {
+    override val size: Int
+        get() = throw UnsupportedOperationException()
 
     var head: Node<T>? = null
     var tail: Node<T>? = null
