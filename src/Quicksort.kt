@@ -1,20 +1,15 @@
 fun main(args: Array<String>) {
-    val toSort = arrayOf(1, 6, 8, 3, 4, 2, 1, 5)
+    val toSort = intArrayOf(1, 6, 8, 3, 4, 2, 0, 5)
     print(quicksort(toSort).joinToString())
 }
 
-fun List<Int>.toLinkedList(): LinkedList<Int> {
-    val temp = LinkedList<Int>()
-    temp.addAll(this)
-    return temp
-}
-
-fun quicksort(toSort: Array<Int>): LinkedList<Int> {
+fun quicksort(toSort: IntArray): IntArray {
+    if (toSort.size < 2) {
+        return toSort
+    }
     val pivot = toSort[toSort.size / 2]
-    var smaller = toSort.filter { it < pivot }
-    var bigger = toSort.filter { it > pivot }
-    val smallerMutableList: LinkedList<Int> = smaller.toLinkedList();
-    return smallerMutableList
+    var smaller = quicksort(toSort.filter { it < pivot }.toIntArray())
+    var bigger = quicksort(toSort.filter { it > pivot }.toIntArray())
+    var result = smaller.plus(pivot).plus(bigger)
+    return result
 }
-
-//TODO: implement LinkedList as MutableList

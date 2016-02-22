@@ -2,10 +2,7 @@ class LinkedListIterator<T>(start: Node<T>) : MutableListIterator<T> {
     var current: Node<T> = start
 
     override fun add(element: T) {
-        val toAdd: Node<T> = Node(element)
-        toAdd.next = current.next
-        toAdd.prev = current
-        current.next = toAdd
+        throw UnsupportedOperationException()
     }
 
     override fun remove() {

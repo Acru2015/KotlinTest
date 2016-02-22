@@ -1,12 +1,10 @@
 class LinkedList<T>() : MutableList<T> {
-    override val size: Int
-        get() = throw UnsupportedOperationException()
-
+    override var size: Int = 0
     var head: Node<T>? = null
     var tail: Node<T>? = null
 
     override fun add(element: T): Boolean {
-        val toAdd: Node<T> = Node(element)
+        val toAdd: Node<T> = Node(element, size)
         if (tail != null) {
             (tail as Node<T>).next = toAdd
             toAdd.prev = tail
@@ -15,6 +13,7 @@ class LinkedList<T>() : MutableList<T> {
             head = toAdd
             tail = toAdd
         }
+        size++
         return true
     }
 
@@ -28,7 +27,8 @@ class LinkedList<T>() : MutableList<T> {
 
     override fun addAll(elements: Collection<T>): Boolean {
         if (head == null) {
-            //this = elements.toMutableList()
+            head = Node(elements.first(), 0)
+            elements.drop(0)
         }
         for (e in elements) {
             this.add(e)
@@ -39,6 +39,7 @@ class LinkedList<T>() : MutableList<T> {
     override fun clear() {
         head = null
         tail = null
+        size = 0
     }
 
     override fun listIterator(): MutableListIterator<T> {
@@ -64,7 +65,13 @@ class LinkedList<T>() : MutableList<T> {
     }
 
     override fun removeAll(elements: Collection<T>): Boolean {
-        throw UnsupportedOperationException()
+        val iterator: MutableListIterator<T> = listIterator()
+        while (iterator.hasNext()) {
+            /*if (iterator.next() == element) {
+                return true
+            }*/
+        }
+        return false
     }
 
     override fun removeAt(index: Int): T {
@@ -100,7 +107,7 @@ class LinkedList<T>() : MutableList<T> {
     }
 
     override fun isEmpty(): Boolean {
-        throw UnsupportedOperationException()
+        return size == 0
     }
 
     override fun lastIndexOf(element: T): Int {
@@ -108,6 +115,6 @@ class LinkedList<T>() : MutableList<T> {
     }
 
     override fun iterator(): MutableIterator<T> {
-        throw UnsupportedOperationException()
+        return listIterator()
     }
 }
