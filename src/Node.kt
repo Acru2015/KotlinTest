@@ -1,4 +1,4 @@
-class Node<T>(var value: T, var index: Int) {
-    var next: Node<T>? = null
-    var prev: Node<T>? = null
+class Node<E>(var value: E) {
+    var next: Node<E>? = null
+    var prev: Node<E>? = null
 }
