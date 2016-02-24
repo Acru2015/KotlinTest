@@ -6,7 +6,7 @@ class MutableLinkedList<E> : MutableList<E>, Deque<E>, Cloneable {
 
 
     override fun add(element: E): Boolean {
-        val toAdd = Node(element, size)
+        val toAdd = Node(size, element)
         if (head == null && tail != null) {
             head = toAdd
             tail = toAdd
@@ -22,35 +22,62 @@ class MutableLinkedList<E> : MutableList<E>, Deque<E>, Cloneable {
         if (index > size) {
             throw Throwable("Index out of bounds")
         }
-        val toAdd = Node(element, index)
-        if (head != null) {
-            var temp = head
+        if (dirty) {
+            correctIndices()
+        }
+        val toAdd = Node(index, element)
+        var temp = head
+        if (temp != null) {
             while (temp.next != null) {
-                if (temp.index - 1 == index) {
-                    temp.
+                if (temp.index + 1 == index) {
+                    toAdd.next = temp.next
+                    toAdd.prev = temp
+                    temp.next = toAdd
+                    dirty = true
                 }
             }
         }
     }
 
-    override fun addAll(index: Int, elements: Collection<E>): Boolean {
-        throw UnsupportedOperationException()
+    override fun addAll(elements: Collection<E>): Boolean {
+        for (e in elements) {
+            this.add(e)
+        }
+        return true
     }
 
-    override fun addAll(elements: Collection<E>): Boolean {
-        throw UnsupportedOperationException()
+    override fun addAll(index: Int, elements: Collection<E>): Boolean {
+        var counter = 0
+        for (e in elements) {
+            this.add(index + counter, e)
+            counter++
+        }
+        return true
     }
 
     override fun clear() {
-        throw UnsupportedOperationException()
+        head = null
+        tail = null
+        size = 0
     }
 
     override fun listIterator(): MutableListIterator<E> {
-        throw UnsupportedOperationException()
+        return iterator()
     }
 
     override fun listIterator(index: Int): MutableListIterator<E> {
-        throw UnsupportedOperationException()
+        if (index > size) {
+            throw Throwable("Index out of bounds")
+        }
+        var temp = head
+        if (temp != null) {
+            while (temp.next != null) {
+                if (temp.index == index) {
+                    return MutableLinkedListIterator(temp)
+                }
+            }
+        }
+        throw Throwable("No idea whats wrong")
     }
 
     override fun remove(element: E): Boolean {
@@ -191,5 +218,9 @@ class MutableLinkedList<E> : MutableList<E>, Deque<E>, Cloneable {
 
     override fun removeLastOccurrence(obj: Any): Boolean {
         throw UnsupportedOperationException()
+    }
+
+    private fun correctIndices() {
+        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
