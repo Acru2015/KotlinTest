@@ -6,11 +6,31 @@ class MutableLinkedList<E> : MutableList<E>, Deque<E>, Cloneable {
 
 
     override fun add(element: E): Boolean {
-        throw UnsupportedOperationException()
+        val toAdd = Node(element, size)
+        if (head == null && tail != null) {
+            head = toAdd
+            tail = toAdd
+        } else {
+            tail?.next = toAdd
+            toAdd.prev = tail
+            tail = toAdd
+        }
+        return true
     }
 
     override fun add(index: Int, element: E) {
-        throw UnsupportedOperationException()
+        if (index > size) {
+            throw Throwable("Index out of bounds")
+        }
+        val toAdd = Node(element, index)
+        if (head != null) {
+            var temp = head
+            while (temp.next != null) {
+                if (temp.index - 1 == index) {
+                    temp.
+                }
+            }
+        }
     }
 
     override fun addAll(index: Int, elements: Collection<E>): Boolean {
@@ -101,7 +121,7 @@ class MutableLinkedList<E> : MutableList<E>, Deque<E>, Cloneable {
         throw UnsupportedOperationException()
     }
 
-    override fun iterator(): MutableIterator<E> {
+    override fun iterator(): MutableListIterator<E> {
         throw UnsupportedOperationException()
     }
 

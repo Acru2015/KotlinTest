@@ -1,39 +1,26 @@
 class MutableLinkedListIterator<E>(start: Node<E>) : MutableListIterator<E> {
-    var current = start
-
     override fun add(element: E) {
-        var toAdd = Node(element)
-
-        toAdd.prev = current
-        current.next = toAdd
-
-        if (current.next != null) {
-            toAdd.next = current.next
-            (current.next as Node<E>).prev = toAdd
-        }
-    }
-
-    override fun remove() {
-        if (current.next != null && current.prev != null)
-    }
-
-    override fun set(element: E) {
-        current.value = element
+        throw UnsupportedOperationException()
     }
 
     override fun hasNext(): Boolean {
-        return current.next != null
-    }
-
-    override fun hasPrevious(): Boolean {
-        return current.prev != null
+        throw UnsupportedOperationException()
     }
 
     override fun next(): E {
-        if (current.next != null) {
-            current = current.next
-            return current.value
-        }
+        throw UnsupportedOperationException()
+    }
+
+    override fun remove() {
+        throw UnsupportedOperationException()
+    }
+
+    override fun set(element: E) {
+        throw UnsupportedOperationException()
+    }
+
+    override fun hasPrevious(): Boolean {
+        throw UnsupportedOperationException()
     }
 
     override fun nextIndex(): Int {
@@ -41,14 +28,11 @@ class MutableLinkedListIterator<E>(start: Node<E>) : MutableListIterator<E> {
     }
 
     override fun previous(): E {
-        if (current.prev == null) {
-            throw Throwable()
-        }
-        current = current.prev as Node<E>
-        return current.value
+        throw UnsupportedOperationException()
     }
 
     override fun previousIndex(): Int {
         throw UnsupportedOperationException()
     }
+
 }
