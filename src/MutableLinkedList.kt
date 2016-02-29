@@ -2,12 +2,11 @@ class MutableLinkedList<E> : MutableList<E>, Deque<E>, Cloneable {
     override var size = 0
     var head: Node<E>? = null
     var tail: Node<E>? = null
-    var dirty = false
-
+    //var dirty = false
 
     override fun add(element: E): Boolean {
         val toAdd = Node(size, element)
-        if (head == null && tail != null) {
+        if (head == null && tail == null) {
             head = toAdd
             tail = toAdd
         } else {
@@ -15,6 +14,7 @@ class MutableLinkedList<E> : MutableList<E>, Deque<E>, Cloneable {
             toAdd.prev = tail
             tail = toAdd
         }
+        size++
         return true
     }
 
@@ -22,21 +22,11 @@ class MutableLinkedList<E> : MutableList<E>, Deque<E>, Cloneable {
         if (index > size) {
             throw Throwable("Index out of bounds")
         }
-        if (dirty) {
-            correctIndices()
-        }
         val toAdd = Node(index, element)
-        var temp = head
-        if (temp != null) {
-            while (temp.next != null) {
-                if (temp.index == index) {
-                    toAdd.next = temp.next
-                    toAdd.prev = temp
-                    temp.next = toAdd
-                    dirty = true
-                }
-            }
-        }
+        val prevNode = iterateTo(index - 1)
+        toAdd.prev = prevNode
+        toAdd.next = prevNode.next
+        prevNode.next = toAdd
     }
 
     override fun addAll(elements: Collection<E>): Boolean {
@@ -69,16 +59,16 @@ class MutableLinkedList<E> : MutableList<E>, Deque<E>, Cloneable {
         if (index > size) {
             throw Throwable("Index out of bounds")
         }
-        if (dirty) {
+        /*if (dirty) {
             correctIndices()
-        }
+        }*/
         var temp = head
         if (temp != null) {
-            while (temp.next != null) {
-                temp = temp.next
+            while (temp!!.next != null) {
                 if (temp.index == index) {
                     return MutableLinkedListIterator(temp)
                 }
+                temp = temp.next
             }
         }
         throw Throwable("No idea whats wrong")
@@ -240,7 +230,21 @@ class MutableLinkedList<E> : MutableList<E>, Deque<E>, Cloneable {
         throw UnsupportedOperationException()
     }
 
-    private fun correctIndices() {
+    /*private fun correctIndices() {
         throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    private fun link(prev: Node<E>?, next: Node<E>?, toLink: Node<E>) {
+
+    }*/
+
+    private fun iterateTo(index: Int): Node<E> {
+        var temp: Node<E> = head!!
+        var currentIndex = 0
+        while (currentIndex != index) {
+            temp = temp.next!!
+            currentIndex++
+        }
+        return temp
     }
 }
