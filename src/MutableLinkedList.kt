@@ -11,7 +11,7 @@ class MutableLinkedList<E> : MutableList<E>, Deque<E>, Cloneable {
             head = toAdd
             tail = toAdd
         } else {
-            tail?.next = toAdd
+            tail!!.next = toAdd
             toAdd.prev = tail
             tail = toAdd
         }
@@ -29,7 +29,7 @@ class MutableLinkedList<E> : MutableList<E>, Deque<E>, Cloneable {
         var temp = head
         if (temp != null) {
             while (temp.next != null) {
-                if (temp.index + 1 == index) {
+                if (temp.index == index) {
                     toAdd.next = temp.next
                     toAdd.prev = temp
                     temp.next = toAdd
@@ -69,9 +69,13 @@ class MutableLinkedList<E> : MutableList<E>, Deque<E>, Cloneable {
         if (index > size) {
             throw Throwable("Index out of bounds")
         }
+        if (dirty) {
+            correctIndices()
+        }
         var temp = head
         if (temp != null) {
             while (temp.next != null) {
+                temp = temp.next
                 if (temp.index == index) {
                     return MutableLinkedListIterator(temp)
                 }
@@ -81,11 +85,27 @@ class MutableLinkedList<E> : MutableList<E>, Deque<E>, Cloneable {
     }
 
     override fun remove(element: E): Boolean {
-        throw UnsupportedOperationException()
+        val iterator = iterator()
+        var temp: E;
+        while (iterator.hasNext()) {
+            temp = iterator.next()
+            if (element == temp) {
+                iterator.remove()
+            }
+        }
+        throw Throwable("List does not contain the Element")
     }
 
     override fun removeAll(elements: Collection<E>): Boolean {
-        throw UnsupportedOperationException()
+        val iterator = iterator()
+        var temp: E;
+        while (iterator.hasNext()) {
+            temp = iterator.next()
+            if (temp in elements) {
+                iterator.remove()
+            }
+        }
+        throw Throwable("List does not contain the Element")
     }
 
     override fun removeAt(index: Int): E {
